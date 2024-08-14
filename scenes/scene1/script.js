@@ -40,43 +40,25 @@ const createScene = () => {
     box.position.y = -0.5; // Position the cube at the same level as the ball
     box.position.x = 2; // Position the cube to the right of the ball
 
-    const frameRate = 10;
+    const frameRate = 60;
     const xSlide = new BABYLON.Animation("xSlide", "position.x", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT);
     const zSlide = new BABYLON.Animation("zSlide", "position.z", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT);
+    const ballx = new BABYLON.Animation("ballx", "position.x", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT);
+    const ballz = new BABYLON.Animation("bally", "position.z", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT);
 
-    const keyFrames = [];
-
-    const keys2 = [];
-    
-    keyFrames.push({
-        frame: 0,
-        value: 2
-    });
-
-    keyFrames.push({
-        frame: frameRate,
-        value: -2
-    });
-
-    keyFrames.push({
-        frame: 2 * frameRate,
-        value: 2
-    });
-
-    keys2.push({
-        frame: 3 * frameRate,
-        value: 0
-    })
-
-    keys2.push({
-        frame: 4 * frameRate,
-        value: 2
-    })
+    const keyFrames = [{ frame: 0, value: 2 }, { frame: frameRate, value: -2 }, { frame: 2 * frameRate, value: 2 }];
+    const keyFrames2 = [{ frame: 0, value: 2 }, { frame: frameRate, value: -3 }];
+    const keys = [{frame: 3 * frameRate, value: 0}, {frame: 10 * frameRate, value: 2}];
+    const keys2 = [{frame: 4 * frameRate, value: 0}, {frame: 4 * frameRate, value: -2}];
 
     xSlide.setKeys(keyFrames);
-    zSlide.setKeys(keys2);
+    zSlide.setKeys(keys);
+
+    ballx.setKeys(keyFrames2);
+    ballz.setKeys(keys2);
 
     scene.beginDirectAnimation(box, [xSlide, zSlide], 0, 25 * frameRate, false);
+    scene.beginDirectAnimation(ball, [ballx, ballz], 0, 25 * frameRate, false);
 
 
     return scene;
